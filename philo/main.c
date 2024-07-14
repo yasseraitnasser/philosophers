@@ -6,37 +6,69 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:42:43 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/14 01:28:30 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:45:37 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init(t_philo *philo, char **argv)
+void	init1(t_input *input, char **argv)
 {
-	philo->input->nbr_of_philos = ft_atoi(argv[1]);
-	philo->input->time_to_die = ft_atoi(argv[2]);
-	philo->input->time_to_eat = ft_atoi(argv[3]);
-	philo->input->time_to_sleep = ft_atoi(argv[4]);
+	input->nbr_of_philos = ft_atoi(argv[1]);
+	input->time_to_die = ft_atoi(argv[2]);
+	input->time_to_eat = ft_atoi(argv[3]);
+	input->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		philo->input->times_each_philo_must_eat = ft_atoi(argv[5]);
+		input->nbr_of_meals = ft_atoi(argv[5]);
 	else
-		philo->input->times_each_philo_must_eat = -1;
+		input->nbr_of_meals = -1;
+}
+
+void	init2(t_philo **philo, t_input *input)
+{
+	t_philo	*tmp;
+	int		i;
+
+	*philo = NULL;
+	i = 0;
+	while (i < input->nbr_of_philos)
+	{
+		tmp = ft_lstnew(input, i);
+		if (!tmp)
+			return ; // work to do befor return
+		ft_lstadd_back(philo, tmp);
+		if (!philo)
+			return ; // same thing here
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_philo	*philo;
+	t_input	*input;
 
 	if (argc == 5 || argc == 6)
 	{
 		if (!parsing(argv))
 		{
-			philo = malloc(sizeof(t_philo));
-			philo->input = malloc(sizeof(t_input));
-			if (!philo || !philo->input)
+			input = malloc(sizeof(t_input));
+			if (!input)
 				return (1);
-			init(philo, argv);
+			init1(input, argv);
+			init2(&philo, input);
+			while (philo)
+			{
+				printf("%d\n", philo->id);
+				printf("%ld\n", philo->input->nbr_of_philos);
+				printf("%ld\n", philo->input->time_to_die);
+				printf("%ld\n", philo->input->time_to_eat);
+				printf("%ld\n", philo->input->time_to_sleep);
+				printf("%ld\n", philo->input->nbr_of_meals);
+				printf("-------------------------------------");
+				philo = philo-> next;
+			}
+			exit(0);
 			if (last_check(philo->input))
 				algo_implementation(philo);
 			else

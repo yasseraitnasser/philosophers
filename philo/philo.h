@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:59:23 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/14 01:05:49 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:38:42 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_input
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
-	long	times_each_philo_must_eat;
+	long	nbr_of_meals;
 }	t_input;
 
 typedef struct s_philo
@@ -37,9 +37,14 @@ typedef struct s_philo
 
 int		parsing(char **argv);
 int		check_each_argument(char *str);
-void	init(t_philo *philo, char **argv);
+void	init1(t_input *input, char **argv);
+void	init2(t_philo **philo, t_input *input);
 long	ft_atoi(const char *str);
 void	algo_implementation(t_philo *philo);
 int		last_check(t_input *infos);
+t_philo	*ft_lstnew(t_input *input, int i);
+void	ft_lstadd_back(t_philo **lst, t_philo *new);
+int	ft_lstsize(t_philo *lst);
+t_philo	*ft_lstlast(t_philo *lst);
 
 #endif
