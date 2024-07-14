@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:59:23 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/05 21:30:42 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:05:49 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,27 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct s_philo
+typedef struct s_input
 {
 	long	nbr_of_philos;
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
 	long	times_each_philo_must_eat;
-}	t_philo_infos;
+}	t_input;
+
+typedef struct s_philo
+{
+	int				id;
+	t_input			*input;
+	struct s_philo	*next;
+}	t_philo;
 
 int		parsing(char **argv);
 int		check_each_argument(char *str);
-void	init(t_philo_infos *infos, char **argv);
+void	init(t_philo *philo, char **argv);
 long	ft_atoi(const char *str);
-void	philo(t_philo_infos *infos);
-int		last_check(t_philo_infos *infos);
+void	algo_implementation(t_philo *philo);
+int		last_check(t_input *infos);
 
 #endif
