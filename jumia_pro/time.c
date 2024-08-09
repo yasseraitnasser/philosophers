@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:30:37 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/06 17:33:16 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/08/09 22:14:41 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long	gettime(long time)
 	return (tmp - time);
 }
 
-void	ultimate_usleep(long	time, t_philo *philo)
+void	ft_usleep_mutex(long	time, t_philo *philo)
 {
 	struct timeval	tv;
 	long	tmp;

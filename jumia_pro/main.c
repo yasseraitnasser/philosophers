@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:19:49 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/06 17:29:42 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/08/10 00:20:18 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 			{
 				data_init(&table);
 				dinner_time(&table);
-				//clean_up(table); destroy mutexes and free
+				clean_up(&table);
 			}
 		}
 		else

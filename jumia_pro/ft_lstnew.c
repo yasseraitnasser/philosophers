@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:04:44 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/06 17:16:36 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/08/10 00:21:28 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_philo	*ft_lstnew(int	id, pthread_mutex_t *forks, t_table *table)
 	new = malloc(sizeof(t_philo));
 	if (!new)
 		return (NULL);
+	pthread_mutex_init(&new->mutex, NULL);
 	new -> id = id + 1;
 	new -> meals_counter = 0;
 	new -> right_fork = &forks[new->id - 1];

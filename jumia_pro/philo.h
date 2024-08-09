@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:18:59 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/06 17:33:40 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/08/10 00:19:36 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 	pthread_t	thread;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	mutex;
 	t_table	*table;
 	struct s_philo	*next;
 }	t_philo;
@@ -46,7 +47,6 @@ typedef struct s_table
 	long	time_to_sleep;
 	long	nbr_of_meals;
 	long	simulation_start;
-	pthread_mutex_t	mutex;
 	pthread_mutex_t	*forks;
 	t_philo	*philos;
 }	t_table;
@@ -62,5 +62,16 @@ void	dinner_time(t_table *table);
 long	gettime(long time);
 void	*routine(void *data);
 void	print_action(long time, t_philo *philo, char *str);
+void	ft_usleep_mutex(long	time, t_philo *philo);
+void	ft_usleep(long	time);
+void	clean_up(t_table *table);
+void	monitoring(t_philo *philo);
+int	check_if_full(t_philo *philo);
+void	create_threads(t_philo *philo);
+void	*routine(void *data);
+void	first_meal(t_philo *philo);
+void	philo_cycle(t_philo *philo);
+void	*one_philo_routine(void *data);
+void	print_philo_action(long time, t_philo *philo, char *action);
 
 #endif
