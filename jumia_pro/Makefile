@@ -1,8 +1,8 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-FILES = main.c parsing.c ft_atoi.c algo.c \
-	ft_lstnew.c ft_lstadd_back.c ft_lstsize.c ft_lstlast.c \
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+FILES = main.c parsing.c ft_atoi.c init.c \
+	ft_lstadd_back.c ft_lstnew.c dinner.c time.c
 
 FILES_o = $(FILES:.c=.o)
 

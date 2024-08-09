@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 19:01:53 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/13 20:06:18 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/04 17:32:15 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/04 18:12:14 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,18 @@ int	check_each_argument(char *str)
 	return (0);
 }
 
-int	parsing(char **argv)
+int	last_check(t_table *table)
+{
+	if (table->nbr_of_philos > INT_MAX
+		|| table->time_to_die > INT_MAX
+		|| table->time_to_eat > INT_MAX
+		|| table->time_to_sleep > INT_MAX
+		|| table->nbr_of_meals > INT_MAX)
+		return (1);
+	return (0);
+}
+
+int	parsing(char **argv, t_table *table)
 {
 	int	i;
 
@@ -48,16 +59,15 @@ int	parsing(char **argv)
 			return (1);
 		i++;
 	}
+	table->nbr_of_philos = ft_atol(argv[1]);
+	table->time_to_die = ft_atol(argv[2]);
+	table->time_to_eat = ft_atol(argv[3]);
+	table->time_to_sleep = ft_atol(argv[4]);
+	if (argv[5])
+		table->nbr_of_meals = ft_atol(argv[5]);
+	else
+		table->nbr_of_meals = -1;
+	if (last_check(table))
+		return (1);
 	return (0);
-}
-
-int	last_check(t_input *input)
-{
-	if (input->nbr_of_philos > INT_MAX
-		|| input->time_to_die > INT_MAX
-		|| input->time_to_eat > INT_MAX
-		|| input->time_to_sleep > INT_MAX
-		|| input->times_each_philo_must_eat > INT_MAX)
-		return (0);
-	return (1);
 }

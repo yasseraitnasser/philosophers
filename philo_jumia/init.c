@@ -33,5 +33,5 @@ void	data_init(t_table *table)
 	}
 	tmp->next = head;
 	table->philos = head;
-	table->simulation_start = gettime();
+	table->simulation_start = gettime(0);
 }

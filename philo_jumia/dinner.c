@@ -12,22 +12,98 @@
 
 #include "philo.h"
 
+void	print_action(long time, t_philo *philo, char *str)
+{
+	pthread_mutex_t	mutex;
+
+	pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_lock(&mutex);
+	if (!philo->status)
+	{
+		printf("%ld\t%d %s\n", time, philo->id, str);
+		pthread_mutex_unlock(&mutex);
+	}
+	else
+	{
+		pthread_mutex_unlock(&mutex);
+		usleep(50);
+	}
+}
+
+void	philo_cycle(t_philo *philo, long start_time)
+{
+	pthread_mutex_t	mutex;
+
+	pthread_mutex_init(&mutex);
+	pthread_mutex_lock(philo->right_fork);
+	print_action(gettime(start_time), philo, "has taken a fork");
+	pthread_mutex_lock(philo->left_fork);
+	print_action(gettime(start_time), philo, "has taken a fork");
+	print_action(gettime(start_time), philo, "is eating");
+	pthread_mutex_lock(&mutex);
+	if (philo->status)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(&mutex);
+		return ;
+	}
+	philo->last_meal = gettime(0);
+	philo->meals_counter++;
+	pthread_mutex_unlock(philo->left_fork);
+	ft_usleep(); // TO DO
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	print_action(gettime(start_time), philo, "is sleeping")
+	ft_usleep(); // TO DO
+	print_action(gettime(start_time), philo, "is thinking");
+}
+
+void	first_meal(t_philo *philo, long start_time)
+{
+	if (philo->nbr_of_philos % 2)
+		if (!philo->id % 2)
+			philo_cycle(philo, start_time);
+	else
+		if (!philo->id % 2)
+			philo_cycle(philo, start_time);
+}
+
+void	*routine(void *data)
+{
+	t_philo	*philo;
+	long	start_time;
+
+	philo = (t_philo *)data;
+	start_time = philo->table->simulation_start;
+	print_action(gettime(start_time), philo, "is thinking"); // to do
+	first_meal(philo, start_time);
+	return (NULL);
+}
+
 void	dinner_time(t_table *table)
 {
-	int	i;
-	printf("%ld\n", table->nbr_of_philos);
-	printf("%ld\n", table->time_to_die);
-	printf("%ld\n", table->time_to_eat);
-	printf("%ld\n", table->time_to_sleep);
-	printf("%ld\n", table->nbr_of_meals);
 	t_philo	*tmp;
-	tmp = table->philos;
+	int		i;
+	pthread_t	*threads;
+
+	threads = malloc(sizeof(pthread_t) * table->nbr_of_philos);
+	if (!threads)
+		return ;
 	i = 0;
+	tmp = table->philos;
 	while (i < table->nbr_of_philos)
 	{
-		printf("id %d | right fork %p | left fork %p\n", tmp->id, tmp->right_fork, tmp->left_fork);
+		if (pthread_create(threads + i, NULL, routine, tmp))
+		{
+			printf("pthread_create failed\n");
+			return ;
+		}
 		tmp = tmp->next;
 		i++;
 	}
-	// check if the init went good // to do
+	//ft_monitoring(table->philo); // to do :)
+	i = 0;
+	while (i < table->nbr_of_philos)
+		pthread_join(threads[i++], NULL);
 }

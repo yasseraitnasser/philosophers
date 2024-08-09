@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 21:07:48 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/14 01:22:49 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/04 17:19:49 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/06 17:29:42 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	algo_implementation(t_philo *philo)
+int	main(int argc, char **argv)
 {
-	printf("%ld\n", philo->input->nbr_of_philos);
-	printf("%ld\n", philo->input->time_to_die);
-	printf("%ld\n", philo->input->time_to_eat);
-	printf("%ld\n", philo->input->time_to_sleep);
-	printf("%ld\n", philo->input->times_each_philo_must_eat);
-	free(philo->input);
-	free(philo);
+	t_table	table;
+
+	if (argc == 5 || argc == 6)
+	{
+		if (!parsing(argv, &table))
+		{
+			if (table.nbr_of_meals)
+			{
+				data_init(&table);
+				dinner_time(&table);
+				//clean_up(table); destroy mutexes and free
+			}
+		}
+		else
+			printf("invalid input\n");
+	}
+	else
+		printf("invalid number of arguments\n");
 }

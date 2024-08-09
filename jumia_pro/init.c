@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:09:12 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/07/05 21:31:20 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/06 16:50:47 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/06 21:43:46 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atoi(const char *str)
+void	data_init(t_table *table)
 {
 	int		i;
-	long	sign;
-	long	result;
+	t_philo		*head;
+	t_philo		*tmp;
 
+	head = NULL;
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_of_philos);
+	if (!forks)
+		return ;
+	pthread_mutex_init(&table->mutex, NULL);
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < table->nbr_of_philos)
 	{
-		if (str[i] == '-')
-			sign = -1;
+		pthread_mutex_init(&table->forks[i], NULL);
+		tmp = ft_lstnew(i, forks, table);
+		ft_lstadd_back(&head, tmp);
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
-	{
-		result = result * 10 + str[i] - 48;
-		i++;
-	}
-	return (result * sign);
+	tmp->next = head;
+	table->philos = head;
+	table->simulation_start = gettime(0);
 }
