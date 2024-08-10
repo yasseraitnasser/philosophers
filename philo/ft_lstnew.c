@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-t_philo	*ft_lstnew(int	id, pthread_mutex_t *forks, t_table *table)
+t_philo	*ft_lstnew(int id, pthread_mutex_t *forks, t_table *table)
 {
 	t_philo	*new;
 

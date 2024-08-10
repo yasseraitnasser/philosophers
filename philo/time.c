@@ -15,17 +15,17 @@
 long	gettime(long time)
 {
 	struct timeval	tv;
-	long	tmp;
+	long			tmp;
 
 	gettimeofday(&tv, NULL);
 	tmp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (tmp - time);
 }
 
-void	ft_usleep_mutex(long	time, t_philo *philo)
+void	ft_usleep_mutex(long time, t_philo *philo)
 {
 	struct timeval	tv;
-	long	tmp;
+	long			tmp;
 
 	gettimeofday(&tv, NULL);
 	tmp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
@@ -42,10 +42,11 @@ void	ft_usleep_mutex(long	time, t_philo *philo)
 		gettimeofday(&tv, NULL);
 	}
 }
-void	ft_usleep(long	time)
+
+void	ft_usleep(long time)
 {
 	struct timeval	tv;
-	long	tmp;
+	long			tmp;
 
 	gettimeofday(&tv, NULL);
 	tmp = tv.tv_sec * 1000 + tv.tv_usec / 1000;

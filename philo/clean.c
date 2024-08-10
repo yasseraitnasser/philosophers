@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:09:12 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/04 17:59:45 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/10 06:20:08 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/10 06:20:16 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *str)
+void	clean_up(t_table *table)
 {
 	int		i;
-	long	sign;
-	long	result;
+	t_philo	*tmp1;
+	t_philo	*tmp2;
 
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	tmp1 = table->philos;
+	while (i < table->nbr_of_philos)
 	{
-		if (str[i] == '-')
-			sign = -1;
+		tmp2 = tmp1->next;
+		pthread_mutex_destroy(tmp1->right_fork);
+		pthread_mutex_destroy(tmp1->left_fork);
+		pthread_mutex_destroy(&tmp1->mutex);
+		free(tmp1);
+		tmp1 = tmp2;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
-	{
-		result = result * 10 + str[i] - 48;
-		i++;
-	}
-	return (result * sign);
+	free(table->forks);
 }

@@ -14,7 +14,7 @@
 
 void	data_init(t_table *table)
 {
-	int		i;
+	int			i;
 	t_philo		*head;
 	t_philo		*tmp;
 

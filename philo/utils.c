@@ -1,38 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:09:12 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/04 17:59:45 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/10 06:19:29 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/10 06:19:49 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *str)
+void	create_threads(t_philo *philo)
 {
-	int		i;
-	long	sign;
-	long	result;
+	int	i;
 
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < philo->table->nbr_of_philos)
 	{
-		if (str[i] == '-')
-			sign = -1;
+		pthread_create(&philo->thread, NULL, routine, philo);
+		philo = philo->next;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
+}
+
+int	check_if_full(t_philo *philo)
+{
+	int	i;
+	int	tmp;
+
+	i = 0;
+	tmp = philo->table->nbr_of_philos;
+	while (philo->meals_counter >= philo->table->nbr_of_meals && i <= tmp)
 	{
-		result = result * 10 + str[i] - 48;
 		i++;
+		philo = philo->next;
 	}
-	return (result * sign);
+	if (i >= philo->table->nbr_of_philos)
+		return (1);
+	return (0);
 }

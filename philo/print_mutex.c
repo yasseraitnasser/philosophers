@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   print_mutex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:09:12 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/04 17:59:45 by yait-nas         ###   ########.fr       */
+/*   Created: 2024/08/10 06:18:55 by yait-nas          #+#    #+#             */
+/*   Updated: 2024/08/10 06:19:08 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *str)
+void	print_philo_action(long time, t_philo *philo, char *action)
 {
-	int		i;
-	long	sign;
-	long	result;
-
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	pthread_mutex_lock(&philo->mutex);
+	if (philo->status == ALIVE)
 	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
+		printf("%ld\t%d %s\n", time, philo->id, action);
+		pthread_mutex_unlock(&philo->mutex);
 	}
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
+	else
 	{
-		result = result * 10 + str[i] - 48;
-		i++;
+		pthread_mutex_unlock(&philo->mutex);
+		usleep(50);
 	}
-	return (result * sign);
 }
