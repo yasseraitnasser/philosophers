@@ -31,13 +31,13 @@ void	ft_usleep_mutex(long time, t_philo *philo)
 	tmp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	while (tv.tv_sec * 1000 + tv.tv_usec / 1000 - tmp < time)
 	{
-		pthread_mutex_lock(&philo->mutex);
-		if (philo->status == DEAD)
+		pthread_mutex_lock(&philo->table->mutex);
+		if (philo->table->status == DEAD)
 		{
-			pthread_mutex_unlock(&philo->mutex);
+			pthread_mutex_unlock(&philo->table->mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->mutex);
+		pthread_mutex_unlock(&philo->table->mutex);
 		usleep(1);
 		gettimeofday(&tv, NULL);
 	}

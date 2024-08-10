@@ -25,10 +25,10 @@ void	clean_up(t_table *table)
 		tmp2 = tmp1->next;
 		pthread_mutex_destroy(tmp1->right_fork);
 		pthread_mutex_destroy(tmp1->left_fork);
-		pthread_mutex_destroy(&tmp1->mutex);
 		free(tmp1);
 		tmp1 = tmp2;
 		i++;
 	}
+	pthread_mutex_destroy(&table->mutex);
 	free(table->forks);
 }

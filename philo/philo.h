@@ -30,11 +30,9 @@ typedef struct s_philo
 	int						id;
 	int						meals_counter;
 	long					last_meal_time;
-	int						status;
 	pthread_t				thread;
 	pthread_mutex_t			*right_fork;
 	pthread_mutex_t			*left_fork;
-	pthread_mutex_t			mutex;
 	t_table					*table;
 	struct s_philo			*next;
 }	t_philo;
@@ -47,6 +45,8 @@ typedef struct s_table
 	long					time_to_sleep;
 	long					nbr_of_meals;
 	long					simulation_start;
+	int						status;
+	pthread_mutex_t			mutex;
 	pthread_mutex_t			*forks;
 	t_philo					*philos;
 }	t_table;

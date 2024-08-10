@@ -19,13 +19,11 @@ t_philo	*ft_lstnew(int id, pthread_mutex_t *forks, t_table *table)
 	new = malloc(sizeof(t_philo));
 	if (!new)
 		return (NULL);
-	pthread_mutex_init(&new->mutex, NULL);
 	new -> last_meal_time = table->simulation_start;
 	new -> id = id + 1;
 	new -> meals_counter = 0;
 	new -> right_fork = &forks[new->id - 1];
 	new -> left_fork = &forks[new->id % table->nbr_of_philos];
-	new -> status = ALIVE;
 	new -> table = table;
 	new -> next = NULL;
 	return (new);

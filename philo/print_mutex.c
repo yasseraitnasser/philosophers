@@ -14,15 +14,15 @@
 
 void	print_philo_action(long time, t_philo *philo, char *action)
 {
-	pthread_mutex_lock(&philo->mutex);
-	if (philo->status == ALIVE)
+	pthread_mutex_lock(&philo->table->mutex);
+	if (philo->table->status == ALIVE)
 	{
 		printf("%ld\t%d %s\n", time, philo->id, action);
-		pthread_mutex_unlock(&philo->mutex);
+		pthread_mutex_unlock(&philo->table->mutex);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->mutex);
+		pthread_mutex_unlock(&philo->table->mutex);
 		usleep(50);
 	}
 }

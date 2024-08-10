@@ -18,7 +18,9 @@ void	data_init(t_table *table)
 	t_philo		*head;
 	t_philo		*tmp;
 
+	pthread_mutex_init(&table->mutex, NULL);
 	table->simulation_start = gettime(0);
+	table->status = ALIVE;
 	head = NULL;
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_of_philos);
 	if (!table->forks)
