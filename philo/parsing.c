@@ -6,7 +6,7 @@
 /*   By: yait-nas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:32:15 by yait-nas          #+#    #+#             */
-/*   Updated: 2024/08/04 18:12:14 by yait-nas         ###   ########.fr       */
+/*   Updated: 2024/08/10 22:45:09 by yait-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	check_each_argument(char *str)
 	}
 	if (str[i] < '0' || str[i] > '9')
 		return (1);
+	while (str[i] == '0')
+		i++;
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
 		i++;

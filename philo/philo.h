@@ -22,6 +22,7 @@
 
 # define ALIVE 0
 # define DEAD 1
+# define FULL 1
 
 typedef struct s_table	t_table;
 

@@ -27,7 +27,7 @@ void	monitoring(t_philo *philo, long start)
 		}
 		if (check_if_full(philo) && philo->table->nbr_of_meals != -1)
 		{
-			philo->table->status = DEAD;
+			philo->table->status = FULL;
 			pthread_mutex_unlock(&philo->table->mutex);
 			return ;
 		}
